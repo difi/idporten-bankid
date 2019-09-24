@@ -1,0 +1,17 @@
+String language;
+try {
+	if (request.getParameter("locale") != null){
+		language = 	HttpRequestUtil.getLanguageParam(request);
+	}
+	else if (request.getSession().getAttribute("IDPortenLocale") != null){
+		language = (String)request.getSession().getAttribute("IDPortenLocale");
+	}
+	else{
+		language = "nb";
+	}
+}catch (Exception e){
+		language = "nb";
+}
+request.getSession().setAttribute("MinIDLocale", language);
+request.getSession().setAttribute("IDPortenLocale", language);
+%>

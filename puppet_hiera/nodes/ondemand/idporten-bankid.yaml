@@ -1,0 +1,22 @@
+---
+classes:
+- idporten_bankid
+- filebeat
+
+idporten_bankid::site_host:             'eid-atest-web01.dmz.local'
+idporten_bankid::server_host:           'idporten-openam'
+idporten_bankid::server_port:           '8080'
+
+# ********************************************************************************
+# * Configuration for filebeat
+# ********************************************************************************
+filebeat::prospectors:
+  tomcat-access:
+    paths:
+    - '/var/log/idporten-bankid/access_log'
+    doc_type: 'tomcat-access'
+    fields_under_root: true
+    fields:
+      application: idporten-bankid
+      environment: atest
+      log_env : "${LOG_ENV:unset}"
