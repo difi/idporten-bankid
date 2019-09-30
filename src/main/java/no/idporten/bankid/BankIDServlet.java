@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,14 +34,15 @@ public class BankIDServlet {
     }
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/bankid")
-    protected void service(@RequestParam String operation,
+    protected void service(HttpServletRequest request,
+                           @RequestParam String operation,
                            @RequestParam String sid,
                            @RequestParam String encKey,
                            @RequestParam String encData,
                            @RequestParam String encAuth,
                            HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
-
+        log.info(request.getParameter("ForceAuth"));
         if ("initAuth".equalsIgnoreCase(operation)) {
             // log.debug("initAuth Response: " + initAuth(request));
             response.getWriter().println(initAuth(operation, sid, encKey, encData, encAuth));

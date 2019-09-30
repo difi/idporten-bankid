@@ -22,9 +22,10 @@ public class BankIDJSTokenController {
 
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity handleAuthorizationCodeGrant(@RequestParam(value = "code", required = false) String code) {
+        log.error("SID ++-" + code);
         String sid = bankIDCache.getSID(code);
         if (sid == null) {
             return ResponseEntity.notFound().build();

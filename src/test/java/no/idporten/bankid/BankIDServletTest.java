@@ -71,7 +71,7 @@ public class BankIDServletTest {
 
     @Test
     public void testServiceServletRequestServletResponseNullRequest() throws IOException {
-        bs.service(null, null, null, null, null, mockedResponse);
+        bs.service(mockedRequest, null, null, null, null, null, mockedResponse);
         verify(mockedPrintWriter, times(1)).flush();
     }
 
@@ -83,7 +83,7 @@ public class BankIDServletTest {
         String encData = "DiRa10wwrYvW2pkIk7ht0qy8VdAtvUiuo23jVpkoRNo1RyLPreHEXghDYwghRpW4nbR0sFaodt0ds0vjsPiF/5dQqvJhcseiYi1SIHBdLBtPyZj94jUMQxKp5yDOCuD56QV+sorJed89hv8Cg3Ipz/8fP0FVHttJ34mdd+Lz5ZcDk/fNcmT8MnYRjVY6MKS2TiNIKhAyfuV1kO2rgzioUQ==";
         String operation = "initAuth";
         String sid = "c3e15351db476d89d8b473279217";
-        bs.service(operation, sid, encKey, encData, encAuth, mockedResponse);
+        bs.service(mockedRequest, operation, sid, encKey, encData, encAuth, mockedResponse);
         assertNotNull(bankIDCache.getBIDSessionData("c3e15351db476d89d8b473279217"));
         verify(mockedPrintWriter, times(1))
                 .println((String) isNull());
@@ -100,7 +100,7 @@ public class BankIDServletTest {
         String operation = "verifyAuth";
         String sid = "c3e15351db476d89d8b473279217";
         bankIDCache.putBIDSessionData(sid, createBIDSessionData());
-        bs.service(operation, sid, encKey, encData, encAuth, mockedResponse);
+        bs.service(mockedRequest, operation, sid, encKey, encData, encAuth, mockedResponse);
 
         verify(mockedPrintWriter, times(1))
                 .println((String) isNull());

@@ -24,6 +24,7 @@ class idporten_bankid (
   $context                                       =$idporten_bankid::params::context,
   $install_dir                                   = $idporten_bankid::params::install_dir,
   $server_port                                   =$idporten_bankid::params::server_port,
+  $idporten_redirect_url                         =$idporten_bankid::params::idporten_redirect_url,
 ) inherits idporten_bankid::params {
 
   include platform

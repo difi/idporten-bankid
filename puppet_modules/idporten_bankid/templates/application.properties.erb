@@ -17,7 +17,7 @@ bankid.logging.categoryname=<%= @bankid_logging_category_name %>
 bankid.cors.allow_origin=<%= @bankid_cors_allow_origin %>
 bankid.suppress_broadcast=<%= @bankid_suppress_broadcast %>
 
-idporten.redirecturl=<%= @idporten_redirect_url %>
+idporten.redirecturl=https://<%= @bankid_webaddress_hostname %>/UI/Login?realm=norge.no
 
 management.endpoints.web.cors.allowed-origins=http://localhost:8080
 management.endpoints.web.cors.allowed-methods=GET,POST,HEAD

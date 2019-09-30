@@ -26,7 +26,7 @@ public class BankIDResponseServlet extends HttpServlet {
    private static final long serialVersionUID = 3734847325014355167L;
 
     private static final String SERVICE_PARAMETER_NAME = "service";
-    private static final String BANKID_RESPONSE_SERVICE = "BankIDResponse";
+    private static final String BANKID_RESPONSE_SERVICE = "BankIDEkstern";
 
     private BankIDProperties bankIDProperties;
     private BankIDCache bankIDCache;

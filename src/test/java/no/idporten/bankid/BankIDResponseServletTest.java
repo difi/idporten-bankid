@@ -63,7 +63,7 @@ public class BankIDResponseServletTest {
 
         rs.service(mockedRequest, null, mockedResponse);
         verify(mockedResponse, times(1))
-                .sendRedirect(contains("service=BankIDResponse"));
+                .sendRedirect(contains("service=BankIDEkstern"));
 
     }
 

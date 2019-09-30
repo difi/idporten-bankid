@@ -2,6 +2,7 @@ package no.idporten.bankid;
 
 import no.idporten.bankid.config.CacheConfiguration;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,10 +50,11 @@ public class BankIDJSTokenControllerTest {
         bankIDCache.putSID(uuid, sid);
         bankIDCache.putSSN(sid, ssn);
         bankIDCache.putOCSP(sid, ocsp);
-        String json = "{\"code\": \"" + uuid + "\"}";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", uuid);
         mockMvc.perform(post("/token")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .content(json)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(jsonObject.toString())
                 .param("code", uuid))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.ssn").value(containsString(ssn)))

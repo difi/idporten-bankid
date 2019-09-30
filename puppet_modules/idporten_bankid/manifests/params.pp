@@ -27,4 +27,5 @@ class idporten_bankid::params {
   $application                                   = 'idporten-bankid'
   $context                                       = 'opensso'
   $setup_openam                                  = false
+  $idporten_redirect_url                         = 'http://localhost:8080/redirecturl'
 }

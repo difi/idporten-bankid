@@ -30,6 +30,7 @@ public class BankIDJSAuthorizeController {
 
     @GetMapping
     public ModelAndView doGet(HttpServletRequest request) {
+        //TODO: Ha med forceAuth, goto osv i kall, enten som parametere eller som ferdig redirecturl
         final String userAgent = request.getHeader("user-agent");
         setBankIDResponseParameters(request);
         try {
@@ -80,6 +81,8 @@ public class BankIDJSAuthorizeController {
         request.getSession().setAttribute("gx_charset", request.getParameter("gx_charset"));
         request.getSession().setAttribute("locale", LanguageUtils.getLanguage(request));
         request.getSession().setAttribute("goto", request.getParameter("goto"));
+        request.getSession().setAttribute("service", request.getParameter("service"));
+        request.getSession().setAttribute("redirectUrl", request.getParameter("redirectUrl"));
     }
 
 }
