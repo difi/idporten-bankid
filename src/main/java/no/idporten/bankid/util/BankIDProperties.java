@@ -56,6 +56,9 @@ public class BankIDProperties {
         @Value("${bankid.response.servlet.url}")
         private String bankIdResponseServletUrl;
 
+        @Value("${bankid.serverid}")
+        private String bankIdServerId;
+
         @Value("${bankid.logging.enabled}")
         private Boolean bankIdLoggingEnabled;
 

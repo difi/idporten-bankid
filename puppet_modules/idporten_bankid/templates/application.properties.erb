@@ -1,6 +1,13 @@
-bankid.servlet.address=https://<%= @bankid_webaddress_hostname %>/idporten-bankid/bankid
+<% if !(@fqdn.scan(/\d{2}/).empty?)
+@serverid = @fqdn.scan(/\d{2}/).last
+else
+@serverid = ''
+end
+-%>
+bankid.servlet.address=https://<%= @bankid_webaddress_hostname %>/idporten-bankid/bankid<% if !(@serverid.empty?) %>/<%= @serverid %>/<% end %>
 bankid.response.servlet.url=https://<%= @bankid_webaddress_hostname %>/idporten-bankid/bidresponse
 bankid.response.url=https://<%= @bankid_webaddress_hostname %>/idporten-bankid/authorizationCode
+bankid.serverid=<% if !(@serverid.empty?) %>/<%= @serverid %>/<% end %>
 bankid.action=<%= @bankid_action %>
 bankid.clienttype=<%= @bankid_clienttype %>
 bankid.keystorefile=<%= @bankid_keystore_file %>

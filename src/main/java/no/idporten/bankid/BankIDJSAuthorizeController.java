@@ -30,8 +30,8 @@ public class BankIDJSAuthorizeController {
 
     @GetMapping
     public ModelAndView doGet(HttpServletRequest request) {
-        //TODO: Ha med forceAuth, goto osv i kall, enten som parametere eller som ferdig redirecturl
         final String userAgent = request.getHeader("user-agent");
+
         setBankIDResponseParameters(request);
         try {
             InitSessionInfo initSessionInfo = new InitSessionInfo();

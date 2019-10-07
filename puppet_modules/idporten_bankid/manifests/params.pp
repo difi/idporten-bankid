@@ -9,9 +9,9 @@ class idporten_bankid::params {
   $bankid_enabled                                = true
   $bankid_action                                 = 'auth'
   $bankid_clienttype                             = 'NC'
-  $bankid_keystore_file                          = '/etc/opt/idporten-bankid/ID-porten-SpareBank_1_SMN.bid'
-  $bankid_keystore_password                      = 'password01'
-  $bankid_merchant_name                          = 'ID-porten-SpareBank_1_SMN'
+  $bankid_keystore_file                          = '/etc/opt/idporten-bankid/ID-Porten-BINAS.bid'
+  $bankid_keystore_password                      = 'qwer1234'
+  $bankid_merchant_name                          = 'ID-Porten-BINAS'
   $bankid_grantedpolicies                        = 'ALL'
   $bankid_logging_enabled                        = false
   $bankid_logging_prop_file                      = '/etc/opt/idporten-bankid/bankid.log4j.properties'

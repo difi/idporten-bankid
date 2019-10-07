@@ -6,16 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.View;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @RequestMapping
@@ -28,12 +26,13 @@ public class BankIDResponseController {
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/authorizationCode")
     public void receiveResponse(HttpServletRequest request,
-                                @RequestParam String uuid,
+                                @RequestParam String code,
                                 HttpServletResponse response) throws URISyntaxException, IOException {
+        HttpSession session = request.getSession();
         String url = UriComponentsBuilder.newInstance()
-                .uri(new URI((String) request.getSession().getAttribute("redirectUrl")))
-                .queryParam("code", uuid)
-                .queryParam("ForceAuth", request.getSession().getAttribute("forceAuth"))
+                .uri(new URI((String) session.getAttribute("redirectUrl")))
+                .queryParam("code", code)
+                .queryParam("ForceAuth", session.getAttribute("forceAuth"))
                 .queryParam("gx_charset", request.getSession().getAttribute("gx_charset"))
                 .queryParam("locale", request.getSession().getAttribute("locale"))
                 .queryParam("goto", request.getSession().getAttribute("goto"))
@@ -52,22 +51,20 @@ public class BankIDResponseController {
     }
 
     private String top(String url) {
-        String result = "<html>" +
+        return "<html>" +
                 "<head><title>Submit This Form</title></head>" +
                 "<body onload=\"javascript:document.forms[0].submit()\">" +
-                "<form method=\"post\" action=\"" + url + "\">";
-        return result;
+                "<form target=\"_parent\" method=\"post\" action=\"" + url + "\">";
     }
 
     private String footer() {
-        String result = "<noscript><input type=\"submit\" value=\"Click to redirect\"></noscript>" +
+        return "<noscript><input type=\"submit\" value=\"Click to redirect\"></noscript>" +
                 "</form>" +
                 "</body>" +
                 "</html>";
-        return result;
     }
 
-    public String getContentType() {
+    private String getContentType() {
         return "text/html";
     }
 

@@ -9,7 +9,7 @@ services:
       - log_config
     ports:
       - 8080
-      - 5005:5005
+      - 5007:5007
     networks:
       atest:
     dns: 8.8.8.8
@@ -54,21 +54,6 @@ services:
           - node.labels.atest == true
   testsp-saml:
     image:  eid-jenkins02.dmz.local:8081/testsp-saml:latest
-    extra_hosts:
-      - "eid-elk-app01.dmz.local:10.243.220.21"
-    configs:
-      - log_config
-    ports:
-      - 8080
-    networks:
-      atest:
-    dns: 8.8.8.8
-    deploy:
-      placement:
-        constraints:
-          - node.labels.atest == true
-  kontaktinfo-backend:
-    image:  eid-jenkins02.dmz.local:8081/kontaktinfo-backend:latest
     extra_hosts:
       - "eid-elk-app01.dmz.local:10.243.220.21"
     configs:

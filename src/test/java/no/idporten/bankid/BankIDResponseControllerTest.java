@@ -1,12 +1,6 @@
 package no.idporten.bankid;
 
-import no.bbs.server.exception.BIDException;
-import no.bbs.server.implementation.BIDFacade;
-import no.bbs.server.vos.InitSessionInfo;
 import no.idporten.bankid.config.CacheConfiguration;
-import no.idporten.bankid.util.BankIDProperties;
-import no.idporten.domain.auth.AuthType;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,15 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.net.URI;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
-import static junit.framework.TestCase.assertNull;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -45,31 +38,48 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {BankidApplication.class, CacheConfiguration.class})
 public class BankIDResponseControllerTest {
 
-    private MockMvc mockMvc;
+    private BankIDResponseController controller;
 
     @Autowired
     private WebApplicationContext springContext;
 
-    @MockBean
-    private RestTemplate restTemplate;
+    @Mock
+    HttpServletResponse mockedResponse;
+
+    @Mock
+    HttpServletRequest mockedRequest;
+
+    @Mock
+    HttpSession mockedSession;
+
+    @Mock
+    PrintWriter mockedWriter;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.webAppContextSetup(springContext).build();
+        when(mockedRequest.getSession()).thenReturn(mockedSession);
+
+        when(mockedSession.getAttribute("redirectUrl")).thenReturn("https://redirect.url");
+        when(mockedSession.getAttribute("forceAuth")).thenReturn("forceAuth");
+        when(mockedSession.getAttribute("gx_charset")).thenReturn("UTF-8");
+        when(mockedSession.getAttribute("locale")).thenReturn("nn");
+        when(mockedSession.getAttribute("goto")).thenReturn("goto");
+        when(mockedSession.getAttribute("service")).thenReturn("BIDEksternResponse");
+
+        when(mockedResponse.getWriter()).thenReturn(mockedWriter);
+        controller = new BankIDResponseController();
     }
 
     @Test
     public void handleAuthorizationCode() throws Exception {
-        String uuid = "fc897796-58da-4f68-91fb-f62b972fe323";
-        String json = "{\"uuid\": \"" + uuid + "\"}";
-        String url = "https://test.difi.no/redirect?code=" + uuid;
-        mockMvc.perform(post("/authorizationCode")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .content(json)
-                .param("uuid", uuid))
-                .andExpect(status().is2xxSuccessful());
-        verify(restTemplate, times(1)).postForEntity(url, "", String.class);
+        String code = "fc897796-58da-4f68-91fb-f62b972fe323";
+        String url = "https://test.difi.no/redirect?code=" + code;
+
+        controller.receiveResponse(mockedRequest, code, mockedResponse);
+
+        verify(mockedResponse, times(1)).setContentType("text/html");
+        verify(mockedResponse, times(1)).getWriter();
     }
 
 }

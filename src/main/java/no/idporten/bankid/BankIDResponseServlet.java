@@ -47,7 +47,8 @@ public class BankIDResponseServlet extends HttpServlet {
             String uuid = createUUID(sid);
             UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
                     .uri(new URI(bankIDProperties.getBankIdResponseUrl()))
-                    .queryParam("uuid", uuid);
+                    .queryParam("code", uuid)
+                    .queryParam("serverid", bankIDProperties.getBankIdServerId());
             //TODO: Finn this.url og legg på responseURL
             if (idpError == null) {
                 if (SsnValidator.isValid(bankIDCache.getSSN(sid))) {
@@ -60,7 +61,7 @@ public class BankIDResponseServlet extends HttpServlet {
                 log.error("BankIDResponseServlet User restarting due to error: " + idpError);
             }
 
-            log.debug("uuid: " + uuid);
+            log.debug("code: " + uuid);
 
             response.sendRedirect(builder.build().toUriString());
 

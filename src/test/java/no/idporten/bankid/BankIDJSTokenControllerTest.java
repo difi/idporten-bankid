@@ -1,5 +1,6 @@
 package no.idporten.bankid;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import no.idporten.bankid.config.CacheConfiguration;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(properties = {"spring.cache.type=jcache"})
 @ContextConfiguration(classes = {BankidApplication.class, CacheConfiguration.class})
 public class BankIDJSTokenControllerTest {
@@ -43,24 +45,31 @@ public class BankIDJSTokenControllerTest {
 
     @Test
     public void handleAuthorizationCodeGrant() throws Exception {
-        String uuid = "fc897796-58da-4f68-91fb-f62b972fe323";
+        String code = "fc897796-58da-4f68-91fb-f62b972fe323";
         String sid = "ASDF24513";
         String ssn = "23079422487";
         byte[] ocsp = "ocsp osv greier skikkelig lang".getBytes();
-        bankIDCache.putSID(uuid, sid);
+        bankIDCache.putSID(code, sid);
         bankIDCache.putSSN(sid, ssn);
         bankIDCache.putOCSP(sid, ocsp);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code", uuid);
         mockMvc.perform(post("/token")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(jsonObject.toString())
-                .param("code", uuid))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .param("code", code))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.ssn").value(containsString(ssn)))
                 .andExpect(jsonPath("$.ocsp").value(containsString(Base64.encodeBase64String(ocsp))));
         assertNull(bankIDCache.getSSN(sid));
-        assertNull(bankIDCache.getSID(uuid));
+        assertNull(bankIDCache.getSID(code));
 
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
