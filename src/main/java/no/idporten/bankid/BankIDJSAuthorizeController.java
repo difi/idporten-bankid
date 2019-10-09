@@ -83,6 +83,7 @@ public class BankIDJSAuthorizeController {
         request.getSession().setAttribute("goto", request.getParameter("goto"));
         request.getSession().setAttribute("service", request.getParameter("service"));
         request.getSession().setAttribute("redirectUrl", request.getParameter("redirectUrl"));
+        request.getSession().setAttribute("start-service", request.getParameter("start-service"));
     }
 
 }

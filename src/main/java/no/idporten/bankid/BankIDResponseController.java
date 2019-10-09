@@ -27,6 +27,8 @@ public class BankIDResponseController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/authorizationCode")
     public void receiveResponse(HttpServletRequest request,
                                 @RequestParam String code,
+                                @RequestParam String service,
+                                @RequestParam String serverid,
                                 HttpServletResponse response) throws URISyntaxException, IOException {
         HttpSession session = request.getSession();
         String url = UriComponentsBuilder.newInstance()
@@ -36,7 +38,8 @@ public class BankIDResponseController {
                 .queryParam("gx_charset", request.getSession().getAttribute("gx_charset"))
                 .queryParam("locale", request.getSession().getAttribute("locale"))
                 .queryParam("goto", request.getSession().getAttribute("goto"))
-                .queryParam("service", request.getSession().getAttribute("service"))
+                .queryParam("service", service)
+                .queryParam("serverid", serverid)
                 .build()
                 .toUriString();
         renderHelpingPage(response, url);

@@ -76,7 +76,7 @@ public class BankIDResponseControllerTest {
         String code = "fc897796-58da-4f68-91fb-f62b972fe323";
         String url = "https://test.difi.no/redirect?code=" + code;
 
-        controller.receiveResponse(mockedRequest, code, mockedResponse);
+        controller.receiveResponse(mockedRequest, code, null, null, mockedResponse);
 
         verify(mockedResponse, times(1)).setContentType("text/html");
         verify(mockedResponse, times(1)).getWriter();
