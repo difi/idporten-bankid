@@ -32,8 +32,8 @@ class idporten_bankid (
 
   anchor { 'idporten_bankid::begin': } ->
   class { '::idporten_bankid::install': } ->
-  class { '::idporten_bankid::config': } ~>
   class { '::idporten_bankid::deploy': } ->
+  class { '::idporten_bankid::config': } ~>
   class { '::idporten_bankid::test_setup': } ->
   class { '::idporten_bankid::service': } ->
   anchor { 'idporten_bankid::end': }
