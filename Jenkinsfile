@@ -1,4 +1,5 @@
 pipelineWithMavenAndDocker {
+    enableDependencyTrack = true
     verificationEnvironment = 'eid-verification2'
     stagingEnvironment = 'eid-staging'
     stagingEnvironmentType = 'puppet2'
