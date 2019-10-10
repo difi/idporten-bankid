@@ -22,9 +22,10 @@ class idporten_bankid (
   $module                                        =$idporten_bankid::params::module,
   $application                                   =$idporten_bankid::params::application,
   $context                                       =$idporten_bankid::params::context,
-  $install_dir                                   = $idporten_bankid::params::install_dir,
+  $install_dir                                   =$idporten_bankid::params::install_dir,
   $server_port                                   =$idporten_bankid::params::server_port,
   $idporten_redirect_url                         =$idporten_bankid::params::idporten_redirect_url,
+  $java_home                                     =$idporten_bankid::params::java_home,
 ) inherits idporten_bankid::params {
 
   include platform

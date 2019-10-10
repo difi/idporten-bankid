@@ -5,14 +5,14 @@ class idporten_bankid::config inherits idporten_bankid {
     content => template("${module_name}/${idporten_bankid::artifact_id}.conf.erb"),
     owner   => $idporten_bankid::service_name,
     group   => $idporten_bankid::service_name,
-    mode    => '0400',
+    mode    => '0444',
   } ->
   file { "${idporten_bankid::config_root}${idporten_bankid::application}/application.properties":
     ensure  => 'file',
     content => template("${module_name}/application.properties.erb"),
     owner   => $idporten_bankid::service_name,
     group   => $idporten_bankid::service_name,
-    mode    => '0400',
+    mode    => '0444',
   } ->
   file { "/etc/rc.d/init.d/${idporten_bankid::service_name}":
     ensure => 'link',
