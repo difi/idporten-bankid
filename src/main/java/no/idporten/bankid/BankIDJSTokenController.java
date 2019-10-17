@@ -26,6 +26,9 @@ public class BankIDJSTokenController {
     @ResponseBody
     public ResponseEntity handleAuthorizationCodeGrant(TokenRequest tokenRequest) {
         String code = tokenRequest.getCode();
+        if (code == null) {
+            return ResponseEntity.badRequest().build();
+        }
         String sid = bankIDCache.getSID(code);
         if (sid == null) {
             return ResponseEntity.notFound().build();
