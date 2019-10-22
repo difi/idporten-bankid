@@ -16,6 +16,8 @@ class idporten_bankid (
   $bankid_ocsp_max_time_skew                     =$idporten_bankid::params::bankid_ocsp_max_time_skew,
   $bankid_cors_allow_origin                      =$idporten_bankid::params::bankid_cors_allow_origin,
   $bankid_suppress_broadcast                     =$idporten_bankid::params::bankid_suppress_broadcast,
+  $bankid_basic_username                         =$idporten_bankid::params::bankid_basic_username,
+  $bankid_basic_password                         =$idporten_bankid::params::bankid_basic_password,
   $bankidmobil_enabled                           =$idporten_bankid::params::bankidmobil_enabled,
   $config_root                                   =$idporten_bankid::params::config_root,
   $log_root                                      =$idporten_bankid::params::log_root,

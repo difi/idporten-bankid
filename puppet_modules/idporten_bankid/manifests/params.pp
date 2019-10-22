@@ -19,6 +19,8 @@ class idporten_bankid::params {
   $bankid_ocsp_max_time_skew                     = 240000
   $bankid_cors_allow_origin                      = 'https://csfe-preprod.bankid.no'
   $bankid_suppress_broadcast                     = 'N'
+  $bankid_basic_username                         = 'user'
+  $bankid_basic_password                         = 'password'
   $idporten_install_dir                          = '/opt/idporten-bankid'
   $config_root                                   = '/etc/opt/'
   $log_root                                      = '/var/log/'

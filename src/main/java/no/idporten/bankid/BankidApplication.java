@@ -17,7 +17,6 @@ public class BankidApplication {
 
     @Bean
     public ResourceBundleMessageSource messageSource() {
-
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("idporten");
         messageSource.setUseCodeAsDefaultMessage(true);
