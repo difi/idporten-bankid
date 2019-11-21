@@ -1,12 +1,11 @@
 class idporten_bankid::test_setup inherits idporten_bankid{
 
   include platform
+  include manage_bids
   if ($platform::test_setup) {
 
-    wget::fetch { 'download_bankid-keys':
-      source             => 'http://static.dmz.local/vagrant/eid/resources/ID-Porten-BINAS.bid',
-      destination        => "${idporten_bankid::config_root}${idporten_bankid::application}/ID-Porten-BINAS.bid",
-      nocheckcertificate => true,
+    manage_bids::bid_config { $idporten_bankidmobil::application:
+      application       => $idporten_bankidmobil::application
     }
   }
 }
