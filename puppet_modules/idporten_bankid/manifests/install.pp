@@ -29,4 +29,10 @@ class idporten_bankid::install inherits idporten_bankid {
     group  => $idporten_bankid::service_name,
     mode   => '0755',
   }
+  file { "${idporten_bankid::tomcat_tmp_dir}":
+    ensure => 'directory',
+    mode   => '0775',
+    owner  => $idporten_bankid::service_name,
+    group  => $idporten_bankid::service_name,
+  }
 }
