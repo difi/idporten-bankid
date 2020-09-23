@@ -6,6 +6,7 @@ classes:
 idporten_bankid::site_host:             'eid-atest-web01.dmz.local'
 idporten_bankid::server_host:           'idporten-openam'
 idporten_bankid::server_port:           '8080'
+idporten_bankid::log_level:             'DEBUG'
 
 # ********************************************************************************
 # * Configuration for filebeat

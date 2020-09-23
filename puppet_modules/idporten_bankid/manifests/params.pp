@@ -32,4 +32,5 @@ class idporten_bankid::params {
   $idporten_redirect_url                         = 'http://localhost:8080/redirecturl'
   $java_home                                     = hiera('platform::java_home')
   $tomcat_tmp_dir                                = '/opt/idporten-bankid/tmp'
+  $log_level                                     = 'WARN'
 }

@@ -29,6 +29,7 @@ class idporten_bankid (
   $idporten_redirect_url                         =$idporten_bankid::params::idporten_redirect_url,
   $java_home                                     =$idporten_bankid::params::java_home,
   $tomcat_tmp_dir                                =$idporten_bankid::params::tomcat_tmp_dir,
+  $log_level                            =$idporten_bankid::params::log_level,
 ) inherits idporten_bankid::params {
 
   include platform
