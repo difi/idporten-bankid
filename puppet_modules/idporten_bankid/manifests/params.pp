@@ -28,7 +28,6 @@ class idporten_bankid::params {
   $module                                        = 'idporten_bankid'
   $application                                   = 'idporten-bankid'
   $context                                       = 'opensso'
-  $setup_openam                                  = false
   $idporten_redirect_url                         = 'http://localhost:8080/redirecturl'
   $java_home                                     = hiera('platform::java_home')
   $tomcat_tmp_dir                                = '/opt/idporten-bankid/tmp'
